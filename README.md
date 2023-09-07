@@ -3,8 +3,7 @@
 This is a tool that simulates a shell. It it for the case that you have the ability to execute commands
 on a remote, but you can't have an interactive shell. (And I used it for exploring Swift)
 
-I implemented this in order to be able to use a nice, interactive/simulated shell with my cloud storage provider ([rsync.net](https://www.rsync.net/))
-
+I implemented this in order to be able to use a somewhat nice, interactive/simulated shell with my cloud storage provider ([rsync.net](https://www.rsync.net/))
 ## Features
 - 30 commands that can be executed on the host
 - 9 builtin commands that can be used for further processing of the output
