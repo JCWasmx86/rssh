@@ -20,9 +20,7 @@ let package = Package(
       dependencies: [
         "Shout", "rl", "PathKit",
         .product(name: "ArgumentParser", package: "swift-argument-parser"),
-      ]),
-    .testTarget(
-      name: "rsshTests",
-      dependencies: ["rssh"]),
+      ]
+    ), .testTarget(name: "rsshTests", dependencies: ["rssh"]),
   ]
 )

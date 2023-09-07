@@ -23,11 +23,7 @@ func parseCommands(string: String) -> ([[String]], [Continuation]) {
       isEscaped = false
     } else if inString {
       if character != quoteType {
-        if character == "\\" {
-          isEscaped = true
-        } else {
-          tmpbuffer.append(character)
-        }
+        if character == "\\" { isEscaped = true } else { tmpbuffer.append(character) }
       } else {
         inString = false
       }
@@ -49,18 +45,14 @@ func parseCommands(string: String) -> ([[String]], [Continuation]) {
         tmpbuffer = ""
         commands.append(args)
         args = []
-        if character == "#" {
-          return (commands, conts)
-        }
+        if character == "#" { return (commands, conts) }
         conts.append(character == ";" ? .semicolon : .pipe)
       } else {
         tmpbuffer.append(character)
       }
     }
   }
-  if tmpbuffer.trimmingCharacters(in: .whitespacesAndNewlines) != "" {
-    args.append(tmpbuffer)
-  }
+  if tmpbuffer.trimmingCharacters(in: .whitespacesAndNewlines) != "" { args.append(tmpbuffer) }
   tmpbuffer = ""
   commands.append(args)
   conts.append(.semicolon)

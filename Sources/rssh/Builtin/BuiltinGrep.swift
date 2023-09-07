@@ -3,27 +3,24 @@ import Foundation
 
 struct BuiltinGrep: ParsableCommand, BuiltinCommand {
   static var configuration = CommandConfiguration(
-    commandName: "grep", abstract: "Print lines that match patterns")
+    commandName: "grep",
+    abstract: "Print lines that match patterns"
+  )
 
-  @Flag(
-    name: [.customShort("i"), .customLong("ignore-case")],
-    help:
-      "Ignore case distinctions"
-  )
+  @Flag(name: [.customShort("i"), .customLong("ignore-case")], help: "Ignore case distinctions")
   var i: Bool = false
-  @Flag(
-    name: [.customShort("v"), .customLong("invert-match")],
-    help:
-      "Ignore case distinctions"
-  )
+  @Flag(name: [.customShort("v"), .customLong("invert-match")], help: "Ignore case distinctions")
   var v: Bool = false
 
-  @Argument
-  var regex: String
+  @Argument var regex: String
 
   public func apply(stdin: String) throws -> String {
     return try filterLines(
-      s: stdin, regex: self.regex, invertMatch: self.v, caseInsensitive: self.i)
+      s: stdin,
+      regex: self.regex,
+      invertMatch: self.v,
+      caseInsensitive: self.i
+    )
   }
 
   func filterLines(s: String, regex: String, invertMatch: Bool, caseInsensitive: Bool) throws

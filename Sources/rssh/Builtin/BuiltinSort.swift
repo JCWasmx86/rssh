@@ -2,13 +2,11 @@ import ArgumentParser
 
 struct BuiltinSort: ParsableCommand, BuiltinCommand {
   static var configuration = CommandConfiguration(
-    commandName: "sort", abstract: "Sort lines of text files")
-
-  @Flag(
-    name: [.customShort("r"), .customLong("reverse")],
-    help:
-      "Reverse result of comparisons."
+    commandName: "sort",
+    abstract: "Sort lines of text files"
   )
+
+  @Flag(name: [.customShort("r"), .customLong("reverse")], help: "Reverse result of comparisons.")
   var r: Bool = false
 
   public func apply(stdin: String) throws -> String {

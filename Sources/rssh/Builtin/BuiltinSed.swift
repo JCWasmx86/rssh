@@ -3,15 +3,14 @@ import Foundation
 
 struct BuiltinSed: ParsableCommand, BuiltinCommand {
   static var configuration = CommandConfiguration(
-    commandName: "sed", abstract: "Stream editor for filtering and transforming text")
-  @Argument(help: "Expression to apply")
-  var expression: String
+    commandName: "sed",
+    abstract: "Stream editor for filtering and transforming text"
+  )
+  @Argument(help: "Expression to apply") var expression: String
   @Flag(
     name: [.customShort("E"), .customLong("regex-extended")],
-    help:
-      "Use extended regular expressions"
-  )
-  var E: Bool = false
+    help: "Use extended regular expressions"
+  ) var E: Bool = false
 
   public func apply(stdin: String) throws -> String {
     return try applySedExpression(s: stdin, expression: self.expression, extended: self.E)

@@ -2,14 +2,14 @@ import ArgumentParser
 
 struct BuiltinHead: ParsableCommand, BuiltinCommand {
   static var configuration = CommandConfiguration(
-    commandName: "head", abstract: "Output the first part of files")
+    commandName: "head",
+    abstract: "Output the first part of files"
+  )
 
   @Option(
     name: [.customShort("n"), .customLong("lines")],
-    help:
-      "Output the first NUM lines, instead of the last 10"
-  )
-  var n: UInt = 10
+    help: "Output the first NUM lines, instead of the last 10"
+  ) var n: UInt = 10
 
   public func apply(stdin: String) throws -> String {
     let arr = stdin.split(whereSeparator: \.isNewline)

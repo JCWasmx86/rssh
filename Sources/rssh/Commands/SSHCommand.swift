@@ -1,3 +1,1 @@
-protocol SSHCommand {
-  func cmd(pwd: String, home: String) -> String
-}
+protocol SSHCommand { func cmd(pwd: String, home: String) -> String }

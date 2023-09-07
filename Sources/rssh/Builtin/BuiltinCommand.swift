@@ -1,3 +1,1 @@
-protocol BuiltinCommand {
-  func apply(stdin: String) throws -> String
-}
+protocol BuiltinCommand { func apply(stdin: String) throws -> String }

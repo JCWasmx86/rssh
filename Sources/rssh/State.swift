@@ -4,9 +4,7 @@ import PathKit
 import Shout
 import rl
 
-func rlEmpty(a: Int32, b: Int32) -> Int32 {
-  return 0
-}
+func rlEmpty(a: Int32, b: Int32) -> Int32 { return 0 }
 
 func signalHandler(signum: Int32) {
   print()
@@ -77,9 +75,7 @@ class State {
     // Not the nicest solution, but I can't get Process() to work
     system("nano " + fileURL.path)
     let d = fileManager.contents(atPath: fileURL.path)
-    if exists {
-      try sftp.removeFile(path)
-    }
+    if exists { try sftp.removeFile(path) }
     try sftp.upload(data: d!, remotePath: path)
     self.success = true
   }
@@ -114,8 +110,9 @@ class State {
     }
     self.success = true
     if let text = try? NSString(
-      contentsOfFile: self.histfile as String, encoding: String.Encoding.utf8.rawValue)
-    {
+      contentsOfFile: self.histfile as String,
+      encoding: String.Encoding.utf8.rawValue
+    ) {
       let lines = text.components(separatedBy: CharacterSet.newlines)
       let len = String(lines.count + 1).count + 1
       var str = ""
@@ -130,9 +127,7 @@ class State {
         str.append("  ")
         str.append(line)
         str.append("\n")
-        if idx == lines.count - 2 {
-          break
-        }
+        if idx == lines.count - 2 { break }
         idx += 1
       }
       return str
@@ -141,9 +136,7 @@ class State {
   }
 
   func handleCommand(args: [String], pipe: String?, capture: Bool) throws -> String? {
-    if args.isEmpty {
-      return nil
-    }
+    if args.isEmpty { return nil }
     if args[0] == "cd" {
       try self.handleCd(args: args)
       return nil
@@ -195,13 +188,9 @@ class State {
     let prompt = self.prompt()
     let cmdopt = readline(prompt)
     var last = rssh_previous_history()
-    defer {
-      free(last)
-    }
+    defer { free(last) }
     if let cmd = cmdopt {
-      if String(cString: cmd).trimmingCharacters(in: .whitespacesAndNewlines) == "" {
-        return
-      }
+      if String(cString: cmd).trimmingCharacters(in: .whitespacesAndNewlines) == "" { return }
       let lstr = last == nil ? nil : String(cString: last!)
       let cstr = String(cString: cmd)
       if last == nil || (last != nil && lstr != cstr) {
@@ -209,12 +198,8 @@ class State {
         write_history(histfile)
       }
       let (argvs, conts) = parseCommands(string: cstr)
-      if argvs.count == 0 || conts.count == 0 {
-        return
-      }
-      if last != nil {
-        free(last)
-      }
+      if argvs.count == 0 || conts.count == 0 { return }
+      if last != nil { free(last) }
       last = cmdopt
       var previousOutput: String?
       self.success = true
@@ -224,21 +209,20 @@ class State {
         if dead && cont == .semicolon {
           dead = false
           print("Skipping", cont, argvs[idx])
-          if idx != argvs.count - 1 {
-            self.success = true
-          }
+          if idx != argvs.count - 1 { self.success = true }
           previousOutput = nil
           continue
         }
         print("\u{001B}[0;34m[*]", cont, argvs[idx], "\u{001B}[0m")
         let output = try self.handleCommand(
-          args: argvs[idx], pipe: previousOutput, capture: cont == .pipe)
+          args: argvs[idx],
+          pipe: previousOutput,
+          capture: cont == .pipe
+        )
         if !self.success {
           if output != nil {
             print(output!, terminator: "")
-            if !output!.hasSuffix("\n") && !output!.isEmpty {
-              print()
-            }
+            if !output!.hasSuffix("\n") && !output!.isEmpty { print() }
             previousOutput = nil
           }
           dead = true
@@ -247,9 +231,7 @@ class State {
         if output != nil {
           if cont == .semicolon {
             print(output!, terminator: "")
-            if !output!.hasSuffix("\n") && !output!.isEmpty {
-              print()
-            }
+            if !output!.hasSuffix("\n") && !output!.isEmpty { print() }
             previousOutput = nil
           } else {
             previousOutput = output
@@ -268,8 +250,9 @@ class State {
 
   func parseRcFile() {
     if let text = try? NSString(
-      contentsOfFile: self.rcfile as String, encoding: String.Encoding.utf8.rawValue)
-    {
+      contentsOfFile: self.rcfile as String,
+      encoding: String.Encoding.utf8.rawValue
+    ) {
       let lines = text.components(separatedBy: CharacterSet.newlines)
       for line in lines {
         if line.hasPrefix("#") || line.trimmingCharacters(in: .whitespacesAndNewlines).count == 0 {
@@ -295,8 +278,7 @@ class State {
           self.server = args[1].split(separator: "@")[1].description
           self.user = args[1].split(separator: "@")[0].description
           self.key = NSString(string: args[2]).expandingTildeInPath
-        default:
-          print("Unknown command:", args[0])
+        default: print("Unknown command:", args[0])
         }
       }
     }

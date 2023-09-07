@@ -3,23 +3,17 @@ import ArgumentParser
 struct Sha512t256: ParsableCommand, SSHCommand {
   static var configuration = CommandConfiguration(
     commandName: "sha512t256",
-    abstract: "Calculate a message-digest fingerprint (checksum) for a file")
-  @Option(name: [.customShort("c")], help: "")
-  var c: String?
-  @Option(name: [.customShort("s")], help: "")
-  var s: String?
+    abstract: "Calculate a message-digest fingerprint (checksum) for a file"
+  )
+  @Option(name: [.customShort("c")], help: "") var c: String?
+  @Option(name: [.customShort("s")], help: "") var s: String?
   // -p not applicable
-  @Flag(name: [.customShort("q")])
-  var q: Bool = false
-  @Flag(name: [.customShort("r")])
-  var r: Bool = false
-  @Flag(name: [.customShort("t")])
-  var t: Bool = false
-  @Flag(name: [.customShort("x")])
-  var x: Bool = false
+  @Flag(name: [.customShort("q")]) var q: Bool = false
+  @Flag(name: [.customShort("r")]) var r: Bool = false
+  @Flag(name: [.customShort("t")]) var t: Bool = false
+  @Flag(name: [.customShort("x")]) var x: Bool = false
 
-  @Argument(help: "File")
-  var files: [String] = []
+  @Argument(help: "File") var files: [String] = []
 
   public func cmd(pwd: String, home: String) -> String {
     var ret = "sha512t256 "
