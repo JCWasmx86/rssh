@@ -1,0 +1,5 @@
+module rl [system] {
+	header "shim.h"
+	link "readline"
+	export *
+}
